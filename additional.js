@@ -43,9 +43,8 @@ function over ( event ) {
 function out ( event ) {
     event.target.style.backgroundColor = 'grey'
 }
-function clickHandler ( event ) {
-    event.stopPropagation()
-    event.target.outerHTML = event.target.innerHTML
+function unwrap ( event ) {
+    event.target.replaceWith(...event.target.childNodes);
 }
 
 var container = document.body;
@@ -62,10 +61,11 @@ var container = document.body;
             position: absolute;
             top: 50%;
             left: 50%;
+            onclick: 'clickHandler';
         `
         container.title = tag
         container.addEventListener ( "mouseover", over )
         container.addEventListener ( "mouseout", out )
-        container.onclick = clickHandler
-	}
+        container.onclick = unwrap
+  }
 )
